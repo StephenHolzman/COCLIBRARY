@@ -1,4 +1,5 @@
 #Plotting
+library(ggplot2)
 basicMultiline <- function(data, xvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
 
   p <- ggplot(data, aes_string(x = xvar, y = "value", colour = "variable"))
