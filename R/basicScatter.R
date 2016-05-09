@@ -1,19 +1,18 @@
 #Plotting
-library(ggplot2)
-basicMultiline <- function(data, xvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
+basicScatter <- function(data, xvar, yvar, colourvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
 
-  p <- ggplot(data, aes_string(x = xvar, y = "value", colour = "variable"))
-  p <- p + theme(panel.grid.major.x = element_blank(),
+  p <- ggplot(data, aes_string(x = xvar, y = yvar, colour = colourvar))
+  p <- p + theme(panel.grid.major.x = element_line(colour = "#AAAAAA"),
                  panel.grid.minor.x = element_blank(),
                  panel.grid.minor.y = element_blank(),
                  panel.grid.major.y = element_line(colour = "#AAAAAA"),
-                 plot.margin = unit(c(7, 2.5, 3, 2), "lines"),
+                 plot.margin = unit(c(7, 2.5, 4, 2), "lines"),
                  axis.text = element_text(face = "bold", size = rel(1.3)),
                  axis.ticks = element_line(colour = NULL),
                  axis.ticks.y = element_blank(),
-                 axis.ticks.x = element_line(colour = "black", size = 2),
+                 axis.ticks.x = element_blank(),
                  axis.line = element_line(colour = "black", size = 1.5),
-                 axis.line.y = element_blank(),
+                 #axis.line.y = element_blank(),
                  axis.title.y = element_text(size = rel(1.8), angle = 90,margin=margin(0,20,0,0),family="Arial",face="bold"),
                  axis.title.x = element_text(size = rel(1.8),margin=margin(20,0,0,0),family="Arial",face="bold"),
                  panel.background = element_rect(fill = 'white'),
@@ -21,7 +20,7 @@ basicMultiline <- function(data, xvar, title, subtitle, cite, author, ylabel, xl
                  legend.key = element_rect(fill = 'white'),
                  legend.title = element_blank(),
                  legend.text = element_text(face = "bold",size = 14))
-  p <- p + geom_line(size=2)
+  p <- p + geom_point(size=4)
 
   if(class(data[[xvar]]) == "Date"){
     p <- p + scale_x_date()
