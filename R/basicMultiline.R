@@ -1,8 +1,8 @@
 #Plotting
 library(ggplot2)
-basicMultiline <- function(data, xvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
+basicMultiline <- function(data, xvar, yvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
 
-  p <- ggplot(data, aes_string(x = xvar, y = "value", colour = "variable"))
+  p <- ggplot(data, aes_string(x = xvar, y = yvar, colour = "variable"))
   p <- p + theme(panel.grid.major.x = element_blank(),
                  panel.grid.minor.x = element_blank(),
                  panel.grid.minor.y = element_blank(),
