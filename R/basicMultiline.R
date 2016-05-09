@@ -7,7 +7,7 @@ basicMultiline <- function(data, xvar, title, subtitle, cite, author, ylabel, xl
                  panel.grid.minor.x = element_blank(),
                  panel.grid.minor.y = element_blank(),
                  panel.grid.major.y = element_line(colour = "#AAAAAA"),
-                 plot.margin = unit(c(7, 2.5, 3, 2), "lines"),
+                 plot.margin = unit(c(7, 2.5, 4, 2), "lines"),
                  axis.text = element_text(face = "bold", size = rel(1.3)),
                  axis.ticks = element_line(colour = NULL),
                  axis.ticks.y = element_blank(),
