@@ -1,6 +1,6 @@
 #Plotting
 library(ggplot2)
-basicMultiline <- function(data, xvar, yvar, colourvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
+basicMultiline <- function(data, xvar, yvar, colourvar, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels, colpal = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000")) {
 
   p <- ggplot(data, aes_string(x = xvar, y = yvar, colour = colourvar))
   p <- p + theme(panel.grid.major.x = element_blank(),
@@ -32,7 +32,7 @@ basicMultiline <- function(data, xvar, yvar, colourvar, title, subtitle, cite, a
   p <- p + scale_y_continuous(limits = ylimits,breaks = ybreaks, labels = ylabels, expand = c(0,0))
   p <- p + xlab(xlabel)
   p <- p + ylab(ylabel)
-  p <- p + scale_colour_manual(values = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000"))
+  p <- p + scale_colour_manual(values = colpal)
 
   #Save to PNG
   png(path, width = 800, height = 500)

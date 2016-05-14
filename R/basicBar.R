@@ -1,12 +1,12 @@
 #Plotting
-basicBar <- function(data, xvar, yvar, colourvar, stat, pos, flip, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels) {
+basicBar <- function(data, xvar, yvar, colourvar, stat, pos, flip, title, subtitle, cite, author, ylabel, xlabel, path, ylimits, ybreaks, ylabels, colpal = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000")) {
   if(is.character(colourvar)){
     p <- ggplot(data, aes_string(x = xvar, y = yvar, fill = colourvar))
     p <- p + geom_bar(stat = stat,position = pos)
-    p <- p + scale_fill_manual(values = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000"))
+    p <- p + scale_fill_manual(values = colpal)
   }else{
     p <- ggplot(data, aes_string(x = xvar, y = yvar))
-    p <- p + geom_bar(stat = stat,fill = "#B3B0D8",position = pos)
+    p <- p + geom_bar(stat = stat,fill = colpal[1],position = pos)
   }
   
   if(flip){
