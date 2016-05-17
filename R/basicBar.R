@@ -61,11 +61,11 @@ basicBar <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos 
   #Save to PNG
   png(path, width = width, height = height)
   print(p)
-  grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=75,gp=gpar(fill="#2E2E2E"))
-  grid.rect(x=unit(.3,"npc"),y=unit(1,"npc"),width=unit(2,"npc"),height=unit(.35,"npc"),gp=gpar(fill="#2E2E2E"))
-  grid.text(title, x=unit(0.01,"npc"),y=unit(.95,"npc"),just="left",gp=gpar(fontsize=36,fontfamily="Arial",fontface="bold", col="white"))
-  grid.text(subtitle, x=unit(0.01,"npc"),y=unit(.88,"npc"),just="left",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
-  grid.text(cite, x=unit(0.01,"npc"),y=unit(.04,"npc"),just="left",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
-  grid.text(author, x=unit(.99,"npc"),y=unit(.04,"npc"),just="right",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
+  grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=unit(75/height,"npc"),gp=gpar(fill="#2E2E2E"))
+  grid.rect(x=unit(.3,"npc"),y=unit(1,"npc"),width=unit(2,"npc"),height=unit(150/height,"npc"),gp=gpar(fill="#2E2E2E"))
+  grid.text(title, x=unit(0.01,"npc"),y=unit((height-26)/height,"npc"),just="left",gp=gpar(fontsize=36,fontfamily="Arial",fontface="bold", col="white"))
+  grid.text(subtitle, x=unit(0.01,"npc"),y=unit((height-56)/height,"npc"),just="left",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
+  grid.text(cite, x=unit(0.01,"npc"),y=unit(20/height,"npc"),just="left",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
+  grid.text(author, x=unit(.99,"npc"),y=unit(20/height,"npc"),just="right",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
   dev.off()  
 }
