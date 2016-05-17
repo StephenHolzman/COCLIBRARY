@@ -1,12 +1,13 @@
 #Plotting
-basicBar <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000")) {
+basicBar <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = c("#B3B0D8", "#E4E499", "#F8ADAD", "#A0DADD", "#EFC786", "#919191", "#E2B9D7", "#B2D9A2","#A05F6B","000000"), width = 800, height = 500) {
+
   if(is.character(colourvar)){
     p <- ggplot(data, aes_string(x = xvar, y = yvar, fill = colourvar))
     p <- p + geom_bar(stat = stat, position = pos)
     p <- p + scale_fill_manual(values = colpal)
   }else{
     p <- ggplot(data, aes_string(x = xvar, y = yvar))
-    p <- p + geom_bar(stat = stat,fill = colpal[1],position = pos)
+    p <- p + geom_bar(stat = stat, fill = colpal[1], position = pos)
   }
   
   if(flip){
@@ -52,15 +53,15 @@ basicBar <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos 
   
   
   p <- p + scale_y_continuous(limits = ylimits,breaks = ybreaks, labels = ylabels, expand = c(0,0))
-  p <- p + xlab(xlabel)
-  p <- p + ylab(ylabel)
+  p <- p + xlab(xtitle)
+  p <- p + ylab(ytitle)
   if(flip){
     p <- p + coord_flip()   
   }
   #Save to PNG
-  png(path, width = 800, height = 500)
+  png(path, width = width, height = height)
   print(p)
-  grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=unit(.15,"npc"),gp=gpar(fill="#2E2E2E"))
+  grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=75,gp=gpar(fill="#2E2E2E"))
   grid.rect(x=unit(.3,"npc"),y=unit(1,"npc"),width=unit(2,"npc"),height=unit(.35,"npc"),gp=gpar(fill="#2E2E2E"))
   grid.text(title, x=unit(0.01,"npc"),y=unit(.95,"npc"),just="left",gp=gpar(fontsize=36,fontfamily="Arial",fontface="bold", col="white"))
   grid.text(subtitle, x=unit(0.01,"npc"),y=unit(.88,"npc"),just="left",gp=gpar(fontsize=18,fontfamily="Arial",fontface="bold", col="white"))
