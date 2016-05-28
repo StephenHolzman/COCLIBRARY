@@ -7,7 +7,7 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
       p <- p + scale_size("")
       p <- p + geom_point(aes_string(size = pointsize),alpha = .7)
     }else{
-      p <- p + geom_point(size = pointsize,alpha = .5)
+      p <- p + geom_point(size = pointsize,alpha = .7)
     }
    # p <- p + scale_colour_manual(values = colpal)
   }else{
@@ -16,7 +16,7 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
       p <- p + scale_size("")
       p <- p + geom_point(aes_string(size = pointsize),alpha = .7)
     }else{
-      p <- p + geom_point(size = pointsize,alpha = .5, colour = colpal[1])
+      p <- p + geom_point(size = pointsize,alpha = .7, colour = colpal[1])
     }
   }
 
@@ -38,7 +38,7 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
                  legend.key = element_rect(fill = plotbackground, colour = plotbackground),
                  legend.title = element_text(size = rel(1.8),margin=margin(0,20,0,50),family=titlefont,face="bold"),
                  legend.position = 'top',
-                 legend.text = element_text(family=labelfont,face = "bold",size = 20,colour = labelfontcol),
+                 legend.text = element_text(family=labelfont,size = 20,colour = labelfontcol),
                 #legend.margin = unit(1, "cm"),
                  legend.background = element_rect(fill = plotbackground, colour = plotbackground),
                  plot.background = element_rect(fill = plotbackground, colour = plotbackground)) 
