@@ -1,5 +1,5 @@
-savePNG <- function(plot = NULL, path = getwd(), width = 600, height = 600, title = "", subtitle = "", cite = "", author = "", headerbackground = default_headerbackground, headerfontcol = default_headerfontcol, footerbackground = default_footerbackground, footerfontcol = default_footerfontcol, titlefont = default_titlefont){
-  png(path, width = width, height = height, logo = default_logo)
+savePNG <- function(plot = NULL, path = getwd(), width = 600, height = 600, title = "", subtitle = "", cite = "", author = "", headerbackground = default_headerbackground, headerfontcol = default_headerfontcol, footerbackground = default_footerbackground, footerfontcol = default_footerfontcol, titlefont = default_titlefont,logo = default_logo){
+  png(path, width = width, height = height)
   print(plot)
   grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=unit(75/height,"npc"),gp=gpar(fill=footerbackground, col = footerbackground))
   grid.rect(x=unit(.3,"npc"),y=unit(1,"npc"),width=unit(2,"npc"),height=unit(150/height,"npc"),gp=gpar(fill=headerbackground, col = headerbackground))
