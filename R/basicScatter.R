@@ -1,5 +1,5 @@
 #Plotting
-basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = default_colpal, width = 800, height = 500, pointsize = 4, plotbackground = default_plotbackground,  headerbackground = default_headerbackground, headerfontcol = default_headerfontcol, footerbackground = default_footerbackground, footerfontcol = default_footerfontcol, titlefont = default_titlefont, labelfont = default_labelfont, labelfontcol = default_labelfontcol, logo = default_logo) {
+basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = default_colpal, width = 800, height = 500, pointsize = 4, plotbackground = default_plotbackground,  headerbackground = default_headerbackground, headerfontcol = default_headerfontcol, footerbackground = default_footerbackground, footerfontcol = default_footerfontcol, titlefont = default_titlefont, labelfont = default_labelfont, labelfontcol = default_labelfontcol, logo = default_logo, styling=coc_styling) {
 
   if(is.character(colourvar)){
     p <- ggplot(data, aes_string(x = xvar, y = yvar, colour = colourvar, fill = NULL))
@@ -34,7 +34,8 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
                  axis.title.y = element_text(size = rel(1.8), angle = 90,margin=margin(0,20,0,0),family=labelfont),
                  axis.title.x = element_text(size = rel(1.8),margin=margin(20,0,0,0),family=labelfont),
                  panel.background = element_rect(fill = plotbackground, colour = plotbackground),
-                 legend.key.size = unit(.05,"npc"),
+                 legend.key.height = unit(10,"points"),
+                 legend.key.width = unit(10,"points"),
                  legend.key = element_rect(fill = plotbackground, colour = plotbackground),
                  legend.title = element_text(size = rel(1.8),margin=margin(0,20,0,50),family=titlefont,face="bold"),
                  legend.position = 'top',
@@ -69,7 +70,7 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
       p <- p + scale_y_continuous(limits = ylimits,breaks = ybreaks, expand = c(0,0))
     }
   }
-
+  p <- p + guides(col = guide_legend(override.aes = list(shape = 15, size = 10, alpha = 1)))
   p <- p + xlab(xtitle)
   p <- p + ylab(ytitle)
   p <- p + labs(colour = legendtitle)
@@ -77,5 +78,5 @@ basicScatter <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", 
 
 
   #Save to PNG
-  savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, headerbackground = headerbackground, headerfontcol = headerfontcol, footerbackground = footerbackground, footerfontcol = footerfontcol, titlefont = titlefont, logo = logo) 
+  savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling) 
 }

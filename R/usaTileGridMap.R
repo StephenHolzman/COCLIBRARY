@@ -1,0 +1,66 @@
+usaTileGridMap2 <- function(data,id,yvar,width=800,height=500,path=NULL,title="",subtitle="",legendtitle=NULL,cite="",author="",plotbackground=default_plotbackground,headerbackground=default_headerbackground,headerfontcol=default_headerfontcol,footerbackground=default_footerbackground,footerfontcol=default_footerfontcol,titlefont=default_titlefont,labelfont=default_labelfont,labelfontcol=default_labelfontcol,colpal = styling$colors$main,logo=default_logo,styling=coc_styling,extramargins=c(0,0,0,0)){
+  tilesize <- 43
+  mapCoordinates <- data.frame(abreviation = c('ME','AK','VT','NH','MA','WA','MT','ND','SD',
+                                   'MN','WI','MI','NY','CT','RI','OR','ID','WY',
+                                   'NE','IA','IL','IN','OH','PA','NJ','CA','NV',
+                                   'UT','CO','KS','MO','KY','WV','DC','MD','DE',
+                                   'AZ','NM','OK','AR','TN','VA','NC','HI','TX',
+                                   'LA','MS','AL','GA','SC','FL'),
+                    name = c('Maine','Alaska','Vermont','New Hampshire','Massachusetts','Washington','Montana','North Dakota','South Dakota','Minnesota','Wisconsin','Michigan','New York','Connecticut','Rhode Island','Oregon','Idaho','Wyoming','Nebraska','Iowa','Illinois','Indiana','Ohio','Pennsylvania','New Jersey','California','Nevada','Utah','Colorado','Kansas','Missouri','Kentucky','West Virginia','District of Columbia','Maryland','Delaware','Arizona','New Mexico','Oklahoma','Arkansas','Tennessee','Virginia','North Carolina','Hawaii','Texas','Louisiana','Mississippi','Alabama','Georgia','South Carolina','Florida'),
+                    fips = c(23,2,50,33,25,53,30,38,46,27,55,26,36,9,44,41,16,56,32,19,17,18,39,42,34,6,32,49,8,20,29,21,54,11,24,10,4,35,40,5,47,51,37,15,48,22,28,1,13,45,12),
+                    X = c(11,0,9,10,11,1,2,3,4,5,6,7,9,10,11,1,2,3,4,5,6,7,8,
+                          9,10,0,1,2,3,4,5,6,7,8,9,10,2,3,4,5,6,7,8,0,3,4,5,
+                          6,7,8,7),
+                    Y = c(7,6,6,6,6,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,3
+                          ,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,0),
+                    stringsAsFactors = FALSE) 
+  
+  mapJoinData <- left_join(mapCoordinates,data,id)
+  p <- ggplot(mapJoinData,aes_string(x = "X", y = "Y"))
+  p <- p + geom_tile(aes_string(fill = yvar))
+  
+  legendorientation <- "right"
+  p <- p + theme(plot.margin = unit(c(70 + extramargins[1], 20 + extramargins[2], 50 + extramargins[3], 20 + extramargins[4]),"points"),
+                 axis.title.y = element_blank(),
+                 axis.title.x = element_blank()
+  )
+  p <- p + theme(
+    panel.grid.minor.x=element_blank(),
+    panel.grid.minor.y=element_blank(),
+    panel.grid.major.x=element_blank(),
+    panel.grid.major.y=element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    #axis.ticks.y = element_blank(),
+    #axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    panel.background = element_rect(fill = styling$margins$color, colour = styling$plot$color),
+    legend.key.height = unit(25,"points"),
+    legend.key.width = unit(25,"points"),
+    legend.key = element_rect(fill = styling$legend$color, colour = styling$legend$color),
+    legend.title = element_text(size = styling$legend$title$font$size,margin=margin(0,0,0,0),family=styling$legend$title$font$family,face=styling$legend$title$font$face),
+    legend.position = legendorientation,
+    legend.text = element_text(family=styling$legend$labels$font$family,size = 20,colour = styling$legend$labels$font$color),
+    legend.background = element_rect(fill = styling$legend$color, colour = styling$legend$color),
+    plot.background = element_rect(fill = styling$plot$color, colour = styling$plot$color),
+    strip.background = element_rect(fill = styling$facet$labels$color, colour = styling$facet$labels$color),
+    strip.text = element_text(colour=styling$facet$labels$font$color,size=styling$facet$labels$font$size,family=styling$facet$labels$font$family)
+  )
+  #p <- p + xlab(xtitle)
+  #p <- p + ylab(ytitle)
+  p <- p + scale_fill_manual(values = colpal)
+  p <- p + labs(fill = legendtitle)
+  p <- p + guides(col = guide_legend(override.aes = list(shape = 15, size = 10)))
+  savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling)
+  
+  
+}
+df <- data.frame( id = c('ME','AK','VT','NH','MA','WA','MT','ND','SD','MN','WI','MI','NY','CT','RI','OR','ID','WY','NE','IA','IL','IN','OH','PA','NJ','CA','NV','UT','CO','KS','MO','KY','WV','DC','MD','DE','AZ','NM','OK','AR','TN','VA','NC','HI','TX','LA','MS','AL','GA','SC','FL'),
+marijuana = c("Legal","Legal","Medical","Medical","Medical","Illegal","Illegal","Illegal","Legal","Medical","Medical","Medical","Legal","Illegal","Illegal","Illegal","Legal","Medical","Medical","Illegal","Legal","Medical","Medical","Illegal","Illegal","Legal","Medical","Medical","Illegal","Illegal","Illegal","Illegal","Medical","Illegal","Illegal","Medical","Medical","Illegal","Illegal","Illegal","Illegal","Illegal","Illegal","Illegal","Illegal","Illegal","Illegal","Medical","Legal","Medical","Illegal"),
+stringsAsFactors = FALSE)
+df <- data.frame(df)
+
+#match("Legal",levels(df$marijuana))
+usaTileGridMap2(data=df,id=c("abreviation"="id"),yvar="marijuana",path="/Volumes/Storage/usatiletest.png",title="Arbitrary Law That is Interesting",subtitle="How it varies by state",cite="Source: Darkness",author="@StephenHolz",labelfontcol=c("Navy","White","White"))
+
+
