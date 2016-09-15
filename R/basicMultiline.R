@@ -1,11 +1,11 @@
 #Plotting
 library(ggplot2)
-basicMultiline <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = c("#B3B0D8", "#E4E499", "#F8ADAD", "#B2D9A2","#A0DADD", "#EFC786", "#919191", "#E2B9D7","#A05F6B","000000"), width = 800, height = 500, pointsize = 4, plotbackground = 'white',  headerbackground = "#2E2E2E", headerfontcol = "white", footerbackground = "#2E2E2E", footerfontcol = "white", fontfamily = "Arial") {
+basicMultiline <- function(data, xvar, yvar, colourvar = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = "", cite = "", author = "", path = NULL,  xtitle = "", xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = coc_styling$colors$main, width = 800, height = 500, pointsize = 4, plotbackground = 'white',  headerbackground = "#2E2E2E", headerfontcol = "white", footerbackground = "#2E2E2E", footerfontcol = "white", fontfamily = "Arial",styling=coc_styling) {
 
   if(is.character(colourvar)){
     p <- ggplot(data, aes_string(x = xvar, y = yvar, colour = colourvar, fill = NULL))
 
-   # p <- p + scale_colour_manual(values = colpal)
+    p <- p + scale_colour_manual(values = colpal)
   }else{
     p <- ggplot(data, aes_string(x = xvar, y = yvar))
   }
@@ -13,7 +13,7 @@ basicMultiline <- function(data, xvar, yvar, colourvar = NULL, stat = "identity"
   p <- p + theme(panel.grid.major.x = element_blank(),
                  panel.grid.minor.x = element_blank(),
                  panel.grid.minor.y = element_blank(),
-                 panel.grid.major.y = element_line(colour = "#AAAAAA"),
+                 panel.grid.major.y = element_line(colour = coc_styling$grid$lines$color),
                  plot.margin = unit(c(7, 2.5, 4, 2), "lines"),
                  axis.text = element_text(face = "bold", size = rel(1.3)),
                  axis.ticks = element_line(colour = NULL),
@@ -23,15 +23,15 @@ basicMultiline <- function(data, xvar, yvar, colourvar = NULL, stat = "identity"
                  axis.line.y = element_blank(),
                 axis.title.y = element_text(size = rel(1.8), angle = 90,margin=margin(0,20,0,0),family=fontfamily,face="bold"),
                  axis.title.x = element_text(size = rel(1.8),margin=margin(20,0,0,0),family=fontfamily,face="bold"),
-                 panel.background = element_rect(fill = plotbackground, colour = plotbackground),
+                 panel.background = element_rect(fill = coc_styling$plot$color, colour = coc_styling$plot$color),
                  legend.key.size = unit(.05,"npc"),
-                 legend.key = element_rect(fill = plotbackground, colour = plotbackground),
+                 legend.key = element_rect(fill = coc_styling$legend$color, colour = coc_styling$legend$color),
                    legend.title = element_text(size = rel(1.8),margin=margin(0,20,0,50),family=fontfamily,face="bold"),
                    legend.position = 'right',
                    legend.text = element_text(face = "bold",size = 14),
                    #legend.margin = unit(1, "cm"),
-                   legend.background = element_rect(fill = plotbackground, colour = plotbackground),
-                   plot.background = element_rect(fill = plotbackground, colour = plotbackground))
+                   legend.background = element_rect(fill = styling$plot$color, colour = styling$plot$color),
+                   plot.background = element_rect(fill = coc_styling$plot$color, colour = styling$plot$color))
 
   p <- p + geom_line(size=2)
 
@@ -64,7 +64,12 @@ if(class(data[[xvar]]) == "Date"){
   p <- p + xlab(xtitle)
   p <- p + ylab(ytitle)
   p <- p + labs(colour = legendtitle)
-  p <- p + scale_colour_manual(values = colpal)
+  #p <- p + scale_colour_manual(values = colpal)
   #Save to PNG
-  savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, headerbackground = headerbackground, headerfontcol = headerfontcol, footerbackground = footerbackground, footerfontcol = footerfontcol, fontfamily = fontfamily) 
+  #Save to PNG
+  if(substr(path,nchar(path)-2,nchar(path))=="png"){
+    savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling)
+  }else if(substr(path,nchar(path)-2,nchar(path))=="pdf"){
+    savePDF(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling)
+  }
 }

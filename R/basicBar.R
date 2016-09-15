@@ -1,5 +1,5 @@
 #Plotting
-basicBar <- function(data, xvar, yvar,positvar,labelformat = NULL,extramargins = c(0,0,0,0), xvarorder = NULL, valuelabels = TRUE, facetvar = NULL, colourvar = NULL,colourvarorder = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = NULL, cite = "", author = "", path = NULL,  xtitle = NULL, xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = styling$colors$main, width = 800, height = 500, styling = coc_styling) {
+basicBar <- function(data, xvar, yvar,positvar=NULL,labelformat = "",extramargins = c(0,0,0,0), xvarorder = NULL, valuelabels = TRUE, facetvar = NULL, colourvar = NULL,colourvarorder = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = NULL, cite = "", author = "", path = NULL,  xtitle = NULL, xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = styling$colors$main, width = 800, height = 500, styling = coc_styling) {
   
   if(is.vector(xvarorder)){
     data[[xvar]] <- as.character(data[[xvar]])
@@ -80,8 +80,12 @@ basicBar <- function(data, xvar, yvar,positvar,labelformat = NULL,extramargins =
   #data <- mutate(data,positval = cumsum(value) - .5*value)
   if(labelformat=="percent"){
     formatstr <- paste0("paste0(round(",yvar,"*100,1),'%')")
+  }else{
+    formatstr <- yvar
   }
-  p <- p + geom_text(aes_string(label=formatstr,y=positvar),colour="white",size=8,family=styling$legend$labels$font$family)
+  if(is.character(positvar)){
+    p <- p + geom_text(aes_string(label=formatstr,y=positvar),colour=colpal[2],size=8,family=styling$legend$labels$font$family)
+  }
   
   if(is.vector(xlabels)){
     p <- p + scale_x_discrete(labels = xlabels)
