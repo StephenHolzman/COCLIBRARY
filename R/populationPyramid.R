@@ -1,5 +1,5 @@
-#Plotting
-basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=TRUE,labelcol="white",extramargins = c(0,0,0,0), xvarorder = NULL, valuelabels = TRUE, facetvar = NULL, colourvar = NULL,colourvarorder = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = NULL, cite = "", author = "", path = NULL,  xtitle = NULL, xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = styling$colors$main, width = 800, height = 500, styling = coc_styling) {
+populationPyramid <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=TRUE,labelcol="white",extramargins = c(0,0,0,0), xvarorder = NULL, valuelabels = TRUE, facetvar = NULL, colourvar = NULL,colourvarorder = NULL, stat = "identity", pos = "dodge", flip = TRUE, title = "", subtitle = "", legendtitle = NULL, cite = "", author = "", path = NULL,  xtitle = NULL, xlimits = NULL, xbreaks = NULL, xlabels = NULL, ytitle = NULL, ylimits = NULL, ybreaks = NULL, ylabels = NULL, colpal = styling$colors$main, width = 800, height = 500, styling = coc_styling) {
+  
   
   if(is.vector(xvarorder)){
     data[[xvar]] <- as.character(data[[xvar]])
@@ -9,7 +9,7 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
     data[[colourvar]] <- as.character(data[[colourvar]])
     data[[colourvar]] <- factor(data[[colourvar]],levels =colourvarorder)
   }
-
+  
   if(is.character(colourvar)){
     p <- ggplot(data, aes_string(x = xvar, y = yvar, fill = colourvar))
     p <- p + geom_bar(stat = stat, position = pos, alpha = 1)
@@ -35,7 +35,7 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
     
   }
   
-
+  
   p <- p + theme(
     panel.grid.minor.x=element_blank(),
     panel.grid.minor.y=element_blank(),
@@ -55,20 +55,20 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
     plot.background = element_rect(fill = styling$plot$color, colour = styling$plot$color),
     strip.background = element_rect(fill = styling$facet$labels$color, colour = styling$facet$labels$color),
     strip.text = element_text(colour=styling$facet$labels$font$color,size=styling$facet$labels$font$size,family=styling$facet$labels$font$family)
-    )
-
+  )
+  
   if(flip){
     p <- p + theme(
       panel.grid.major.x = element_line(colour = styling$grid$lines$color),
       panel.grid.major.y = element_blank()
-      )
-   }else{
+    )
+  }else{
     p <- p + theme(
       panel.grid.major.x = element_blank(),
       panel.grid.major.y = element_line(colour = styling$grid$lines$color)
-      )    
+    )    
   }
-
+  
   
   if(is.vector(ybreaks)){
     if(is.vector(ylabels)){
@@ -86,7 +86,31 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
     p <- p + geom_text(aes_string(label=labelvar,y=positvar),colour=labelcol,size=8,family=styling$legend$labels$font$family)
     
   }
+  if(class(data[[xvar]]) == "Date"){
+    if(is.vector(xbreaks)){
+      if(is.vector(xlabels)){
+        p <- p + scale_x_date(limits = xlimits,breaks = xbreaks, labels = xlabels, expand = c(0,0))
+      }else{
+        p <- p + scale_x_date(limits = xlimits,breaks = xbreaks, expand = c(0,0))
+      }
+    }
+  }else {
+    if(is.vector(xbreaks)){
+      if(is.vector(xlabels)){
+        p <- p + scale_x_continuous(limits = xlimits,breaks = xbreaks, labels = xlabels, expand = c(0,0))
+      }else{
+        p <- p + scale_x_continuous(limits = xlimits,breaks = xbreaks, expand = c(0,0))
+      }
+    }
+  }
   
+  if(is.vector(ybreaks)){
+    if(is.vector(ylabels)){
+      p <- p + scale_y_continuous(limits = ylimits,breaks = ybreaks, labels = ylabels, expand = c(0,0))
+    }else{
+      p <- p + scale_y_continuous(limits = ylimits,breaks = ybreaks, expand = c(0,0))
+    }
+  }  
   if(is.vector(xlabels)){
     p <- p + scale_x_discrete(labels = xlabels)
   }

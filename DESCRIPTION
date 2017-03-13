@@ -1,8 +1,8 @@
 Package: COCLIBRARY
-Title: What the Package Does (one line, title case)
+Title: Charting Library
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Stephen", "Holzman", email = "stephen@chartsoncharts.com", role = c("aut", "cre"))
+Description: COCLIBRARY is a charting library API designed to produce publication quality charts according to a style guide as easily as base charting functiongs. The main COCLIBRARY package should be used as a dependency to a custom rolled R package. The custom package only includes a list variable that stores style choices like fonts, margins, color schemes, etc that are referenced by the various charting functions in COCLIBRARY.
 Depends: R (>= 3.1.3), ggplot2, grid, png
-License: What license is it under?
+License: MIT
 LazyData: true
