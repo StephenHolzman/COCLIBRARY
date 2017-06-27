@@ -4,10 +4,14 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
   if(is.vector(xvarorder)){
     data[[xvar]] <- as.character(data[[xvar]])
     data[[xvar]] <- factor(data[[xvar]],levels =xvarorder)
+  }else{
+    #levels(data[[xvar]]) <- rev(levels(data[[xvar]]))
   }
   if(is.vector(colourvarorder)){
     data[[colourvar]] <- as.character(data[[colourvar]])
     data[[colourvar]] <- factor(data[[colourvar]],levels =colourvarorder)
+  }else{
+    levels(data[[colourvar]]) <- (levels(data[[colourvar]]))
   }
 
   if(is.character(colourvar)){
@@ -21,13 +25,22 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
   
   if((flip && pos == "stack") | (!flip && pos == "dodge")){
     legendorientation <- "top"
+    if(pos == "stack"){
+      p <- p + guides(fill = guide_legend(reverse = TRUE))
+    }else{
+      p <- p + guides(fill = guide_legend(reverse = FALSE))
+    }    
     p <- p + theme(plot.margin = unit(c(70 + extramargins[1], 20 + extramargins[2], 50 + extramargins[3], 20 + extramargins[4]),"points"),
                    axis.title.y = element_text(size = styling$axis$labels$font$size, angle = 90,margin=margin(0,20,0,0),family=styling$axis$labels$font$family, colour = styling$axis$labels$font$color),
                    axis.title.x = element_text(size = styling$axis$labels$font$size,margin=margin(20,0,10,0),family=styling$axis$labels$font$family, colour = styling$axis$labels$font$color)
     )
   }else{
     legendorientation <- "right"
-    p <- p + guides(fill = guide_legend(reverse = TRUE))
+    if(pos == "stack"){
+      p <- p + guides(fill = guide_legend(reverse = FALSE))
+    }else{
+      p <- p + guides(fill = guide_legend(reverse = TRUE))
+    }
     p <- p + theme(plot.margin = unit(c(90+extramargins[1], 10 + extramargins[2], 50 + extramargins[3], 20 + extramargins[4]),"points"),
                    axis.title.y = element_text(size = styling$axis$labels$font$size, angle = 90,margin=margin(0,20,0,0),family=styling$axis$labels$font$family, colour = styling$axis$labels$font$color),
                    axis.title.x = element_text(size = styling$axis$labels$font$size,margin=margin(20,0,10,0),family=styling$axis$labels$font$family, colour = styling$axis$labels$font$color)
@@ -43,7 +56,7 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
     axis.ticks = element_blank(),
     #axis.ticks.y = element_blank(),
     #axis.ticks.x = element_blank(),
-    axis.line = element_line(colour = "black", size = 1.5),
+    #axis.line = element_line(colour = "black", size = 1.5),
     panel.background = element_rect(fill = styling$margins$color, colour = styling$plot$color),
     legend.key.height = unit(25,"points"),
     legend.key.width = unit(25,"points"),
@@ -104,9 +117,14 @@ basicBar <- function(data, xvar, yvar,positvar=NULL,labelvar = NULL,showfooter=T
   #}
   
   #Save to PNG
-  if(substr(path,nchar(path)-2,nchar(path))=="png"){
-    savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling,showfooter=showfooter)
-  }else if(substr(path,nchar(path)-2,nchar(path))=="pdf"){
-    savePDF(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling)
+  if(is.character(path)){
+    if(substr(path,nchar(path)-2,nchar(path))=="png"){
+      savePNG(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling,showfooter=showfooter)
+    }else if(substr(path,nchar(path)-2,nchar(path))=="pdf"){
+      savePDF(plot = p, path = path, width = width, height = height, title = title, subtitle = subtitle, cite = cite, author = author, styling = styling)
+    }    
+  }else{
+    print(p)
   }
+
 }

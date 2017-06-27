@@ -1,6 +1,6 @@
 savePNG <- function(plot = NULL, path = getwd(), logo = TRUE,width = 600, height = 600, title = "", subtitle = "", cite = "", author = "", styling = coc_styling,showfooter=TRUE){
   png(path, width = width, height = height)
-  print(plot)
+  #print(plot)
   if(showfooter){
     grid.rect(x=unit(.3,"npc"),y=unit(0,"npc"),width=unit(2,"npc"),height=unit(styling$footer$height,"points"),gp=gpar(fill=styling$footer$color, col = styling$footer$color))
     grid.text(cite, x=unit(width-8,"points"),y=unit(12,"points"),just="right",gp=gpar(fontsize=styling$footer$cite$font$size,fontfamily=styling$footer$cite$font$family,fontface=styling$footer$cite$font$face, col=styling$footer$cite$font$color))
