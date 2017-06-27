@@ -67,4 +67,3 @@ seeLotsOfCharts <- function(directory){
     ) 
 
 }
-seeLotsOfCharts("/Volumes/Storage/seeCharts/")
